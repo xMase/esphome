@@ -543,6 +543,60 @@ async def jvc_action(var, config, args):
     cg.add(var.set_data(template_))
 
 
+# Keeloq
+CONF_ENCRYPTED = "encrypted"
+CONF_SERIAL = "serial"
+CONF_BUTTON = "button"
+CONF_MANUFACTURER_KEY = "manufacturer_key"
+(
+    KeeloqData,
+    KeeloqBinarySensor,
+    KeeloqTrigger,
+    KeeloqAction,
+    KeeloqDumper,
+) = declare_protocol("Keeloq")
+KEELOQ_SCHEMA = cv.Schema(
+    {
+        cv.Optional(CONF_ENCRYPTED, default=0): cv.hex_uint32_t,
+        cv.Required(CONF_SERIAL): cv.hex_uint32_t,
+        cv.Required(CONF_BUTTON): cv.hex_uint8_t,
+    }
+)
+
+
+@register_binary_sensor("keeloq", KeeloqBinarySensor, KEELOQ_SCHEMA)
+def keeloq_binary_sensor(var, config):
+    cg.add(
+        var.set_data(
+            cg.StructInitializer(
+                KeeloqData,
+                ("serial", config[CONF_SERIAL]),
+                ("button", config[CONF_BUTTON]),
+            )
+        )
+    )
+
+
+@register_trigger("keeloq", KeeloqTrigger, KeeloqData)
+def keeloq_trigger(var, config):
+    pass
+
+
+@register_dumper("keeloq", KeeloqDumper)
+def keeloq_dumper(var, config):
+    pass
+
+
+@register_action("keeloq", KeeloqAction, KEELOQ_SCHEMA)
+async def keeloq_action(var, config, args):
+    template_ = await cg.templatable(config[CONF_ENCRYPTED], args, cg.uint32)
+    cg.add(var.set_encrypted(template_))
+    template_ = await cg.templatable(config[CONF_SERIAL], args, cg.uint32)
+    cg.add(var.set_serial(template_))
+    template_ = await cg.templatable(config[CONF_BUTTON], args, cg.uint8)
+    cg.add(var.set_button(template_))
+
+
 # LG
 LGData, LGBinarySensor, LGTrigger, LGAction, LGDumper = declare_protocol("LG")
 LG_SCHEMA = cv.Schema(
