@@ -7,14 +7,14 @@ namespace esphome {
 namespace remote_base {
 
 struct KeeloqData {
-    uint32_t encrypted;
-    uint32_t serial;
-    uint8_t button;
-    bool low;
-    bool repeat;
-    uint16_t sync = 0;
+  uint32_t encrypted;
+  uint32_t serial;
+  uint8_t button;
+  bool low;
+  bool repeat;
+  uint16_t sync = 0;
 
-    bool operator==(const KeeloqData &rhs) const { return serial == rhs.serial && button == rhs.button; }
+  bool operator==(const KeeloqData &rhs) const { return serial == rhs.serial && button == rhs.button; }
 };
 
 class KeeloqProtocol : public RemoteProtocol<KeeloqData> {
@@ -33,7 +33,7 @@ template<typename... Ts> class KeeloqAction : public RemoteTransmitterActionBase
   TEMPLATABLE_VALUE(uint8_t, button)
   TEMPLATABLE_VALUE(bool, low)
   TEMPLATABLE_VALUE(bool, repeat)
-//  TEMPLATABLE_VALUE(uint16_t, sync)
+  //  TEMPLATABLE_VALUE(uint16_t, sync)
 
   void encode(RemoteTransmitData *dst, Ts... x) override {
     KeeloqData data{};
@@ -42,7 +42,7 @@ template<typename... Ts> class KeeloqAction : public RemoteTransmitterActionBase
     data.button = this->button_.value(x...);
     data.low = this->low_.value(x...);
     data.repeat = this->repeat_.value(x...);
-//    data.sync = this->sync_.value(x...);
+    //    data.sync = this->sync_.value(x...);
     KeeloqProtocol().encode(dst, data);
   }
 };

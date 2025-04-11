@@ -13,7 +13,7 @@ static const uint32_t PREAMBLE_LOW_US = 325;
 static const uint32_t HEADER_LOW_US = 2700;
 
 void KeeloqProtocol::encode(RemoteTransmitData *dst, const KeeloqData &data) {
-    // not implemented
+  // not implemented
 }
 
 optional<KeeloqData> KeeloqProtocol::decode(RemoteReceiveData src) {
@@ -38,7 +38,7 @@ optional<KeeloqData> KeeloqProtocol::decode(RemoteReceiveData src) {
     ESP_LOGD(TAG, "Preamble failure, mark %d", src.peek());
     return {};
   }
-  // te is the elemental period, derived from the actual 
+  // te is the elemental period, derived from the actual
   // HEADER_LOW period, divided by 10
   uint32_t te = 380;
   if (src.peek_space_at_least(HEADER_LOW_US)) {
@@ -101,9 +101,16 @@ optional<KeeloqData> KeeloqProtocol::decode(RemoteReceiveData src) {
 
   return out;
 }
+<<<<<<< HEAD
 void KeeloqProtocol::dump(const KeeloqData &data) {
-  ESP_LOGD(TAG, "Received Keeloq: serial=%07X, encrypted=%08X, button=%01X%s%s", data.serial, data.encrypted, data.button, data.low ? " LOW": "", data.repeat? " REPEAT" : "");
+  ESP_LOGD(TAG, "Received Keeloq: serial=%07X, encrypted=%08X, button=%01X%s%s", data.serial, data.encrypted,
+           data.button, data.low ? " LOW" : "", data.repeat ? " REPEAT" : "");
 
+=======
+
+void KeeloqProtocol::dump(const KeeloqData &data) {
+  ESP_LOGD(TAG, "Received Keeloq: address=0x%08" PRIx32 ", command=0x%02x", data.address, data.command);
+>>>>>>> Base/dev
 }
 
 }  // namespace remote_base
