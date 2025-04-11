@@ -15,7 +15,7 @@ namespace audio {
 
 static const uint32_t READ_WRITE_TIMEOUT_MS = 20;
 
-static const uint32_t CONNECTION_TIMEOUT_MS = 5000;
+static const uint32_t CONNECTION_TIMEOUT_MS = 10000;
 
 // The number of times the http read times out with no data before throwing an error
 static const uint32_t ERROR_COUNT_NO_DATA_READ_TIMEOUT = 100;
