@@ -101,16 +101,9 @@ optional<KeeloqData> KeeloqProtocol::decode(RemoteReceiveData src) {
 
   return out;
 }
-<<<<<<< HEAD
 void KeeloqProtocol::dump(const KeeloqData &data) {
   ESP_LOGD(TAG, "Received Keeloq: serial=%07X, encrypted=%08X, button=%01X%s%s", data.serial, data.encrypted,
            data.button, data.low ? " LOW" : "", data.repeat ? " REPEAT" : "");
-
-=======
-
-void KeeloqProtocol::dump(const KeeloqData &data) {
-  ESP_LOGD(TAG, "Received Keeloq: address=0x%08" PRIx32 ", command=0x%02x", data.address, data.command);
->>>>>>> Base/dev
 }
 
 }  // namespace remote_base
